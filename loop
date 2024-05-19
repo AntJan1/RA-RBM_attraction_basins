@@ -1,0 +1,26 @@
+# !/bin/bash
+
+
+n=$2
+
+gcc prg.c -o prg -lm
+gcc amps.c -o amps -lm
+
+if [[ -d "results" ]]
+then 
+start=$(ls results/ | sort -g -r | head -1)+1
+else mkdir results
+start=1
+fi
+
+for ((i=start;i<=$1;i++))
+do
+echo $i
+./amps $n
+./prg $n
+mkdir results/$i
+mv amplitudes results/$i
+mv output results/$i
+mv evollist results/$i
+done
+exit
